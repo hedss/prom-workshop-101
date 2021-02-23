@@ -22,25 +22,27 @@ scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
     static_configs:
-    - targets: ['localhost:9090']
+    - targets: ['192.168.1.126:9090']
 
   - job_name: 'tns-db'
     scrape_interval: 5s
     static_configs:
-            - targets: ['104.131.10.78:8000']
+            - targets: ['192.168.1.126:8000']
   - job_name: 'tns-app'
     scrape_interval: 5s
     static_configs:
-    - targets: ['104.131.10.78:8001']
+    - targets: ['192.168.1.126:8001']
   - job_name: 'tns-loadgen'
     scrape_interval: 5s
     static_configs:
-    - targets: ['104.131.10.78:8002']
+    - targets: ['192.168.1.126:8002']
   - job_name: 'node'
     scrape_interval: 5s
     static_configs:
-    - targets: ['104.131.10.78:9100']
-  - job_name: 'snmp'
-    scrape_interval: 5s
-    static_configs:
-    - targets: ['localhost:9116']
+    - targets: ['192.168.1.126:9100']
+
+remote_write:
+  - url: https://prometheus-us-central1.grafana.net/api/prom/push
+  basic_auth:
+    username: <Username>
+    password: <Your Grafana.com API Key>

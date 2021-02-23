@@ -24,3 +24,20 @@ loadgen:
     - app
   ports:
     - 8002:80
+
+prometheus:
+  image: prom/prometheus
+  command: ["--storage.tsdb.retention.time=168h", "--storage.tsdb.retention.size=80GB", "--config.file=/etc/prometheus/prometheus.yml"]
+  ports:
+    - "9090:9090"
+  volumes:
+    - ./prometheus-server/prometheus.yml:/etc/prometheus/prometheus.yml
+
+node-exporter:
+  image: prom/node-exporter
+  privileged: true
+  ports:
+    - "9100:9100"
+  command: ["--collector.textfile", "--collector.textfile.directory", "/textfile"]
+  volumes:
+    - ./node-exporter:/textfile
